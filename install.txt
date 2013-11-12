@@ -1,0 +1,49 @@
+Install MySQL:
+
+	... install mysql ...
+	#apt-get install mysql-server mysql-client
+	set password during the installation (1234 for example)
+
+	... install "pymysql" ...
+	git clone https://github.com/PyMySQL/PyMySQL.git
+	cd PyMySQL
+	#apt-get install python3-setuptools
+	#python3 ./setup.py install
+
+	... install "python daemon" ...
+	git clone https://github.com/redsymbol/python-daemon-1.5.5-py3k
+	cd python-daemon-1.5.5-py3k
+	#python3 ./setup.py install
+	
+Create database:
+
+	run client and input password: #mysql -u root -p
+
+	create database (test) and table (test), insert first row:
+	mysql>
+		create database test;
+		use test;
+		create table test (request VARCHAR(32), status VARCHAR(32), tstamp TIMESTAMP);
+		insert into test (request,status) values ('','');
+
+	check if it works:
+	mysql>
+		show databases;
+		use test;
+		show tables;
+		select * from test;
+		
+Quick test:
+
+	... run daemon ...
+	#python3 test_daemon.py
+	
+	... check process ...
+	#ps ax | grep test_daemon.py
+	
+	... test if timestamp actual ...
+	#mysql -u root -p -e "select * from test.test"
+	
+	... set stop condition ...
+	#mysql -u root -p -e "update test.test set request='STOP'"
+
